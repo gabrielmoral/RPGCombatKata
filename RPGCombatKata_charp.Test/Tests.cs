@@ -47,29 +47,17 @@ namespace RPGCombatKata_charp.Test
 		}
 
 		[Fact]
-		public void Character_Can_Deal_Damage_To_Enemies()
-		{
-			var player = new Character();
-			var enemy = new Character();
-
-			player.Attack(enemy, minimum_attack_for_character_death);
-
-			enemy.IsDead().Should().BeTrue();
-		}
-
-		[Fact]
 		public void Character_Cannot_Deal_Damage_To_Himself()
 		{
 			var player = new Character();
-			var enemy = new Character();
 
 			player.Attack(player, minimum_attack_for_character_death);
 
-			enemy.IsDead().Should().BeFalse();
+			player.IsDead().Should().BeFalse();
 		}
 
 		[Fact]
-		public void Damage_Applied_Is_Boosted_When_The_Target_Is_Five_Or_More_Levels_Below()
+		public void Damage_Is_Boosted_When_The_Target_Is_Five_Or_More_Levels_Below()
 		{
 			int characterLevel = 6;
 			int futureEnemyHealth = 850;
@@ -84,7 +72,7 @@ namespace RPGCombatKata_charp.Test
 		}
 
 		[Fact]
-		public void Damage_Applied_Is_Reduced_When_The_Target_Is_Five_Or_More_Levels_Above()
+		public void Damage_Is_Reduced_When_The_Target_Is_Five_Or_More_Levels_Above()
 		{
 			int enemyLevel = 6;
 			int futureEnemyHealth = 950;
@@ -96,7 +84,10 @@ namespace RPGCombatKata_charp.Test
 			player.Attack(enemy, attack);
 
 			enemy.CurrentHealth.Should().Be(futureEnemyHealth);
-		}	
+		}
+
+		[Fact]
+		public void 
 	}
 }
 
