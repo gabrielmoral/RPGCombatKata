@@ -7,6 +7,7 @@ namespace RPGCombatKata_csharp
 
 		int CurrentLevel { get; }
 
+		void Attack(Character enemy, Attack attack, Battlefield battlefield);
 
 		void Attack(Character enemy, Attack attack);
 

@@ -47,6 +47,6 @@ namespace RPGCombatKata_csharp
 		{
 			return (target.CurrentLevel - levelDistance) >= player.CurrentLevel;
 		}
-}
+	}
 }
 

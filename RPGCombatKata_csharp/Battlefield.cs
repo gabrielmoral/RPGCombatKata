@@ -33,6 +33,6 @@ namespace RPGCombatKata_csharp
 
 			return position;
 		}
-}
+	}
 }
 

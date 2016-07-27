@@ -14,6 +14,6 @@ namespace RPGCombatKata_csharp
 		{
 			return Math.Abs(this.position - targetPosition.position) <= attackRange;
 		}
-}
+	}
 }
 

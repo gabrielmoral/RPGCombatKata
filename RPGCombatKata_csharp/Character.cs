@@ -23,6 +23,13 @@ namespace RPGCombatKata_csharp
 			target.RecieveDamage(attack.CalculateDamage(this, target));
 		}
 
+		public void Attack(Character target, Attack attack, Battlefield battleField)
+		{
+			if (!battleField.IsTargetInRange(this, target, GetRangeAttack())) return;
+
+			Attack(target, attack);
+		}
+
 		public void Heal(int healing)
 		{
 			if (IsDead()) return;
@@ -33,6 +40,11 @@ namespace RPGCombatKata_csharp
 		public bool IsDead()
 		{
 			return this.CurrentHealth.Equals(MinimumHealth);
+		}
+
+		protected virtual int GetRangeAttack()
+		{
+			return 1;
 		}
 
 		//TODO
@@ -61,6 +73,6 @@ namespace RPGCombatKata_csharp
 			return this.Equals(enemy);
 		}
 
-}
+	}
 }
 
