@@ -1,9 +1,9 @@
 ﻿using System;
 namespace RPGCombatKata_csharp
 {
-	public class MeleeFighter : IFighter
+	public class RangedFighter : IFighter
 	{
-		private int attackRange = 2;
+		private int attackRange = 20;
 		private readonly Character character;
 
 		public double CurrentHealth
@@ -22,7 +22,7 @@ namespace RPGCombatKata_csharp
 			}
 		}
 
-		public MeleeFighter(int characterLevel = 1)
+		public RangedFighter(int characterLevel = 1)
 		{
 			this.character = new Character(characterLevel);
 		}

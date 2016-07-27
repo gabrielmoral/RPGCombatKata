@@ -87,7 +87,55 @@ namespace RPGCombatKata_charp.Test
 		}
 
 		[Fact]
-		public void 
+		public void Melee_Fighter_Cannot_Deal_Damage_If_Enemy_Is_Not_In_Range()
+		{
+			var battlefield = new Battlefield();
+
+			var meleeFighter = new MeleeFighter();
+			var enemy = new Character();
+			var attack = new Attack(100);
+
+			battlefield.Add(enemy, new BattlefieldPosition(5));
+			battlefield.Add(meleeFighter, new BattlefieldPosition(2));
+			           
+			meleeFighter.Attack(enemy, attack, battlefield);
+
+			enemy.CurrentHealth.Should().Be(Character.MaximumHealth);
+		}
+
+		[Fact]
+		public void Ranged_Fighter_Cannot_Deal_Damage_If_Enemy_Is_Not_In_Range()
+		{
+			var battlefield = new Battlefield();
+
+			var rangedFighter = new RangedFighter();
+			var enemy = new Character();
+			var attack = new Attack(100);
+
+			battlefield.Add(enemy, new BattlefieldPosition(23));
+			battlefield.Add(rangedFighter, new BattlefieldPosition(2));
+
+			rangedFighter.Attack(enemy, attack, battlefield);
+
+			enemy.CurrentHealth.Should().Be(Character.MaximumHealth);
+		}
+
+		[Fact]
+		public void Ranged_Fighter_Can_Deal_Damage_If_Enemy_Is_In_Range()
+		{
+			var battlefield = new Battlefield();
+
+			var rangedFighter = new RangedFighter();
+			var enemy = new Character();
+			var attack = new Attack(100);
+
+			battlefield.Add(enemy, new BattlefieldPosition(22));
+			battlefield.Add(rangedFighter, new BattlefieldPosition(2));
+
+			rangedFighter.Attack(enemy, attack, battlefield);
+
+			enemy.CurrentHealth.Should().NotBe(Character.MaximumHealth);
+		}
 	}
 }
 

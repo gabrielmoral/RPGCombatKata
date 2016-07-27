@@ -3,12 +3,17 @@ namespace RPGCombatKata_csharp
 {
 	public class BattlefieldPosition
 	{
-		int v;
+		int position;
 
-		public BattlefieldPosition(int v)
+		public BattlefieldPosition(int position)
 		{
-			this.v = v;
+			this.position = position;
 		}
-	}
+
+		public bool IsInRange(BattlefieldPosition targetPosition, int attackRange)
+		{
+			return Math.Abs(this.position - targetPosition.position) <= attackRange;
+		}
+}
 }
 

@@ -11,7 +11,7 @@ namespace RPGCombatKata_csharp
 			this.damage = damage;
 		}
 
-		public double CalculateDamage(Character player, Character target)
+		public double CalculateDamage(ICharacter player, ICharacter target)
 		{
 			double multiplerDamageFactor = 0.50;
 
@@ -38,12 +38,12 @@ namespace RPGCombatKata_csharp
 			return damage - (damage * multiplerDamageFactor);
 		}
 
-		private bool EnoughMaginToBoostAttack(Character player, Character target)
+		private bool EnoughMaginToBoostAttack(ICharacter player, ICharacter target)
 		{
 			return (player.CurrentLevel - levelDistance) >= target.CurrentLevel;
 		}
 
-		private bool EnoughMarginToReduceAttack(Character player, Character target)
+		private bool EnoughMarginToReduceAttack(ICharacter player, ICharacter target)
 		{
 			return (target.CurrentLevel - levelDistance) >= player.CurrentLevel;
 		}

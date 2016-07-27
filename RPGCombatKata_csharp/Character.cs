@@ -2,7 +2,7 @@
 
 namespace RPGCombatKata_csharp
 {
-	public class Character
+	public class Character : ICharacter
 	{
 		private const double MinimumHealth = 0;
 		public const int MaximumHealth = 1000;
@@ -16,11 +16,11 @@ namespace RPGCombatKata_csharp
 			this.CurrentLevel = characterLevel;
 		}
 
-		public void Attack(Character enemy, Attack attack)
+		public void Attack(Character target, Attack attack)
 		{
-			if (AmIHurintgMyself(enemy)) return;
+			if (AmIHurtingMyself(target)) return;
 
-			enemy.RecieveDamage(attack.CalculateDamage(this, enemy));
+			target.RecieveDamage(attack.CalculateDamage(this, target));
 		}
 
 		public void Heal(int healing)
@@ -34,11 +34,12 @@ namespace RPGCombatKata_csharp
 		{
 			return this.CurrentHealth.Equals(MinimumHealth);
 		}
-		
+
+		//TODO
 		private void RecieveDamage(double damage)
 		{
 			this.CurrentHealth -= damage;
-			
+
 			if (this.CurrentHealth < MinimumHealth)
 			{
 				this.CurrentHealth = MinimumHealth;
@@ -55,10 +56,11 @@ namespace RPGCombatKata_csharp
 			}
 		}
 
-		private bool AmIHurintgMyself(Character enemy)
+		private bool AmIHurtingMyself(ICharacter enemy)
 		{
 			return this.Equals(enemy);
 		}
+
 }
 }
 

@@ -35,6 +35,9 @@
     <Compile Include="Battlefield.cs" />
     <Compile Include="BattlefieldPosition.cs" />
     <Compile Include="MeleeFighter.cs" />
+    <Compile Include="IFighter.cs" />
+    <Compile Include="ICharacter.cs" />
+    <Compile Include="RangedFighter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
