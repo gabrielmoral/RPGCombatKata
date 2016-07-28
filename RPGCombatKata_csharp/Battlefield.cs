@@ -5,11 +5,11 @@ namespace RPGCombatKata_csharp
 {
 	public class Battlefield 
 	{
-		private IDictionary<ICharacter, BattlefieldPosition> charactersPositions;
+		private IDictionary<IBattlefieldElement, BattlefieldPosition> charactersPositions;
 
 		public Battlefield()
 		{
-			charactersPositions = new Dictionary<ICharacter, BattlefieldPosition>();
+			charactersPositions = new Dictionary<IBattlefieldElement, BattlefieldPosition>();
 		}
 
 		public void Add(ICharacter fighter, BattlefieldPosition battlefieldPosition)
@@ -17,7 +17,7 @@ namespace RPGCombatKata_csharp
 			this.charactersPositions.Add(fighter, battlefieldPosition);
 		}
 
-		public bool IsTargetInRange(ICharacter character, ICharacter target, int attackRange)
+		public bool IsTargetInRange(IBattlefieldElement character, IBattlefieldElement target, int attackRange)
 		{
 			BattlefieldPosition characterPosition = FindCharacter(character);
 			BattlefieldPosition targetPosition = FindCharacter(target);
@@ -25,7 +25,7 @@ namespace RPGCombatKata_csharp
 			return characterPosition.IsInRange(targetPosition, attackRange);
 		}
 
-		private BattlefieldPosition FindCharacter(ICharacter character)
+		private BattlefieldPosition FindCharacter(IBattlefieldElement character)
 		{
 			BattlefieldPosition position;
 

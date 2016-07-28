@@ -7,7 +7,8 @@ namespace RPGCombatKata_charp.Test
 {
 	public class Tests
 	{
-		private Attack minimum_attack_for_character_death = new Attack(1000);
+		private Attack minimum_attack_for_character_death = new Attack(1000, new DamageCharactersStrategy(), new RulesToAttackCharacters());
+		private Attack attack_with_some_damage = new Attack(100, new DamageCharactersStrategy(), new RulesToAttackCharacters());
 
 		[Fact]
 		public void When_Damage_Is_Higher_Than_Health_The_Character_Dies()
@@ -61,12 +62,11 @@ namespace RPGCombatKata_charp.Test
 		{
 			int characterLevel = 6;
 			int futureEnemyHealth = 850;
-			var attack = new Attack(100);
 
 			var player = new Character(characterLevel);
 			var enemy = new Character();
 
-			player.Attack(enemy, attack);
+			player.Attack(enemy, attack_with_some_damage);
 
 			enemy.CurrentHealth.Should().Be(futureEnemyHealth);
 		}
@@ -76,12 +76,11 @@ namespace RPGCombatKata_charp.Test
 		{
 			int enemyLevel = 6;
 			int futureEnemyHealth = 950;
-			var attack = new Attack(100);
 
 			var player = new Character();
 			var enemy = new Character(enemyLevel);
 
-			player.Attack(enemy, attack);
+			player.Attack(enemy, attack_with_some_damage);
 
 			enemy.CurrentHealth.Should().Be(futureEnemyHealth);
 		}
@@ -93,12 +92,11 @@ namespace RPGCombatKata_charp.Test
 
 			var meleeFighter = new MeleeFighter();
 			var enemy = new Character();
-			var attack = new Attack(100);
 
 			battlefield.Add(enemy, new BattlefieldPosition(5));
 			battlefield.Add(meleeFighter, new BattlefieldPosition(2));
 			           
-			meleeFighter.Attack(enemy, attack, battlefield);
+			meleeFighter.Attack(enemy, attack_with_some_damage, battlefield);
 
 			enemy.CurrentHealth.Should().Be(Character.MaximumHealth);
 		}
@@ -110,12 +108,11 @@ namespace RPGCombatKata_charp.Test
 
 			var rangedFighter = new RangedFighter();
 			var enemy = new Character();
-			var attack = new Attack(100);
 
 			battlefield.Add(enemy, new BattlefieldPosition(23));
 			battlefield.Add(rangedFighter, new BattlefieldPosition(2));
 
-			rangedFighter.Attack(enemy, attack, battlefield);
+			rangedFighter.Attack(enemy, attack_with_some_damage, battlefield);
 
 			enemy.CurrentHealth.Should().Be(Character.MaximumHealth);
 		}
@@ -127,14 +124,78 @@ namespace RPGCombatKata_charp.Test
 
 			var rangedFighter = new RangedFighter();
 			var enemy = new Character();
-			var attack = new Attack(100);
 
 			battlefield.Add(enemy, new BattlefieldPosition(22));
 			battlefield.Add(rangedFighter, new BattlefieldPosition(2));
 
-			rangedFighter.Attack(enemy, attack, battlefield);
+			rangedFighter.Attack(enemy, attack_with_some_damage, battlefield);
 
 			enemy.CurrentHealth.Should().NotBe(Character.MaximumHealth);
+		}
+
+		[Fact]
+		public void Allies_Cannot_Deal_Damage_To_Themselves()
+		{
+			var redFaction = new Faction();
+
+			var redPlayer1 = new Character();
+			var redPlayer2 = new Character();
+
+			redPlayer1.AddToFaction(redFaction);
+			redPlayer2.AddToFaction(redFaction);
+
+			redPlayer1.Attack(redPlayer2,attack_with_some_damage );
+
+			redPlayer2.CurrentHealth.Should().Be(Character.MaximumHealth);
+		}
+
+		[Fact]
+		public void Allies_Can_Heal_Themselves()
+		{
+			int healingPoints = 100;
+			var redFaction = new Faction();
+
+			var redPlayer1 = new Character();
+			var redPlayer2 = new Character();
+
+			redPlayer1.AddToFaction(redFaction);
+			redPlayer2.AddToFaction(redFaction);
+
+			redPlayer1.Heal(redPlayer2, healingPoints);
+
+			redPlayer2.CurrentHealth.Should().Be(Character.MaximumHealth);
+		}
+
+		[Fact]
+		public void Characters_Of_The_Different_Factions_Cannot_Be_Healed()
+		{
+			int healingPoints = 100;
+			var redFaction = new Faction();
+			var blueFaction = new Faction();
+
+			var redPlayer = new Character();
+			var bluePlayer = new Character();
+		
+			redPlayer.AddToFaction(redFaction);
+			bluePlayer.AddToFaction(blueFaction);
+
+			redPlayer.Attack(bluePlayer, attack_with_some_damage);
+
+			redPlayer.Heal(bluePlayer, healingPoints);
+
+			bluePlayer.CurrentHealth.Should().NotBe(Character.MaximumHealth);
+		}
+
+		[Fact]
+		public void Character_Can_Deal_Damage_To_Props()
+		{
+			int houseHealth = 2000;
+			var character = new Character();
+			var house = new Property(houseHealth);
+
+			character.Attack(house, attack_with_some_damage);
+
+			house.CurrentHealth.Should().BeLessThan(houseHealth);
 		}
 	}
 }

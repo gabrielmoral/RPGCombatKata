@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RPGCombatKata_csharp
 {
@@ -7,27 +9,38 @@ namespace RPGCombatKata_csharp
 		private const double MinimumHealth = 0;
 		public const int MaximumHealth = 1000;
 
+		public Factions Factions { get; private set; }
 		public double CurrentHealth { get; private set;}
-		public int CurrentLevel{ get; private set; }
+		public int CurrentLevel { get; private set; }
 
 		public Character(int characterLevel = 1)
 		{
+			this.Factions = new Factions();
 			this.CurrentHealth = MaximumHealth;
 			this.CurrentLevel = characterLevel;
 		}
 
-		public void Attack(Character target, Attack attack)
-		{
-			if (AmIHurtingMyself(target)) return;
+		public void Attack(IBattlefieldElement target, Attack attack)
+		{	
+			if (Factions.IsTheTargetMyAlly(target)) return;
 
-			target.RecieveDamage(attack.CalculateDamage(this, target));
+			Damage damage = attack.CalculateDamage(this, target);
+
+			target.RecieveDamage(damage);
 		}
 
-		public void Attack(Character target, Attack attack, Battlefield battleField)
+		public void Attack(IBattlefieldElement target, Attack attack, Battlefield battleField)
 		{
 			if (!battleField.IsTargetInRange(this, target, GetRangeAttack())) return;
 
 			Attack(target, attack);
+		}
+
+		public void Heal(ICharacter target, int healing)
+		{
+			if (!Factions.IsTheTargetMyAlly(target)) return;
+
+			target.Heal(healing);
 		}
 
 		public void Heal(int healing)
@@ -42,15 +55,21 @@ namespace RPGCombatKata_csharp
 			return this.CurrentHealth.Equals(MinimumHealth);
 		}
 
+		public void AddToFaction(Faction faction)
+		{
+			Factions.Add(faction);
+		}
+
 		protected virtual int GetRangeAttack()
 		{
 			return 1;
 		}
 
-		//TODO
-		private void RecieveDamage(double damage)
+		public void RecieveDamage(Damage damage)
 		{
-			this.CurrentHealth -= damage;
+			double value = damage.Value;
+
+			this.CurrentHealth -= value;
 
 			if (this.CurrentHealth < MinimumHealth)
 			{
@@ -67,12 +86,6 @@ namespace RPGCombatKata_csharp
 				this.CurrentHealth = MaximumHealth;
 			}
 		}
-
-		private bool AmIHurtingMyself(ICharacter enemy)
-		{
-			return this.Equals(enemy);
-		}
-
 	}
 }
 

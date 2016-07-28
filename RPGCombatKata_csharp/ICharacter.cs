@@ -1,19 +1,13 @@
 ﻿using System;
 namespace RPGCombatKata_csharp
 {
-	public interface ICharacter
+	public interface ICharacter : IBattlefieldElement
 	{
-		double CurrentHealth { get; }
+		void Attack(IBattlefieldElement enemy, Attack attack, Battlefield battlefield);
 
-		int CurrentLevel { get; }
-
-		void Attack(Character enemy, Attack attack, Battlefield battlefield);
-
-		void Attack(Character enemy, Attack attack);
+		void Attack(IBattlefieldElement enemy, Attack attack);
 
 		void Heal(int healing);
-
-		bool IsDead();
 	}
 }
 

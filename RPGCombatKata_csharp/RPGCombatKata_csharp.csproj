@@ -37,6 +37,16 @@
     <Compile Include="MeleeFighter.cs" />
     <Compile Include="ICharacter.cs" />
     <Compile Include="RangedFighter.cs" />
+    <Compile Include="Faction.cs" />
+    <Compile Include="Factions.cs" />
+    <Compile Include="Property.cs" />
+    <Compile Include="BattlefieldElement.cs" />
+    <Compile Include="DamageCharactersStrategy.cs" />
+    <Compile Include="IDamageStrategy.cs" />
+    <Compile Include="DamagePropertiesStrategy.cs" />
+    <Compile Include="IRulesToAttack.cs" />
+    <Compile Include="RulesToAttackCharacters.cs" />
+    <Compile Include="Damage.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
