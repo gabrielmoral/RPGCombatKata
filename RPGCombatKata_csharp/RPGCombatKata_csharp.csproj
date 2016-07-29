@@ -30,20 +30,26 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Character.cs" />
-    <Compile Include="Attack.cs" />
-    <Compile Include="Battlefield.cs" />
-    <Compile Include="BattlefieldPosition.cs" />
-    <Compile Include="MeleeFighter.cs" />
-    <Compile Include="RangedFighter.cs" />
-    <Compile Include="Faction.cs" />
-    <Compile Include="Factions.cs" />
-    <Compile Include="BattlefieldElement.cs" />
-    <Compile Include="DamageCharactersStrategy.cs" />
-    <Compile Include="IDamageStrategy.cs" />
-    <Compile Include="DamageElementsStrategy.cs" />
-    <Compile Include="Damage.cs" />
-    <Compile Include="IPartOfFactions.cs" />
+    <Compile Include="Attack\Attack.cs" />
+    <Compile Include="Attack\Damage.cs" />
+    <Compile Include="Attack\DamageCharactersStrategy.cs" />
+    <Compile Include="Attack\DamageElementsStrategy.cs" />
+    <Compile Include="Characters\MeleeFighter.cs" />
+    <Compile Include="Characters\RangedFighter.cs" />
+    <Compile Include="Characters\Character.cs" />
+    <Compile Include="Attack\IDamageStrategy.cs" />
+    <Compile Include="Characters\BattlefieldElement.cs" />
+    <Compile Include="Factions\Faction.cs" />
+    <Compile Include="Factions\Factions.cs" />
+    <Compile Include="Factions\IPartOfFactions.cs" />
+    <Compile Include="Battlefield\Battlefield.cs" />
+    <Compile Include="Battlefield\BattlefieldPosition.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Attack\" />
+    <Folder Include="Characters\" />
+    <Folder Include="Factions\" />
+    <Folder Include="Battlefield\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
