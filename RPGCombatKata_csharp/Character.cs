@@ -4,13 +4,16 @@ using System.Linq;
 
 namespace RPGCombatKata_csharp
 {
-	public class Character : BattlefieldElement
+	public class Character : BattlefieldElement, IPartOfFactions
 	{
 		private const double MinimumHealth = 0;
 		public const int MaximumHealth = 1000;
 
+		public Factions Factions { get; private set; }
+
 		public Character(int characterLevel = 1) : base(MaximumHealth)
 		{
+			this.Factions = new Factions();
 			this.CurrentLevel = characterLevel;
 		}
 
@@ -44,8 +47,6 @@ namespace RPGCombatKata_csharp
 
 			HealMyself(healing);
 		}
-
-
 
 		public void AddToFaction(Faction faction)
 		{

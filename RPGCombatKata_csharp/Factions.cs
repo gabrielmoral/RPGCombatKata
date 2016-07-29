@@ -6,26 +6,28 @@ namespace RPGCombatKata_csharp
 {
 	public class Factions
 	{
-		private IList<Faction> factions;
+		private readonly IList<Faction> list;
 
 		public Factions()
 		{
-			factions = new List<Faction>();
+			list = new List<Faction>();
 		}
 
 		public void Add(Faction faction)
 		{
-			factions.Add(faction);
+			list.Add(faction);
 		}
 
 		public bool IsTheTargetMyAlly(BattlefieldElement target)
 		{
-			return AreThereSharedFactions(target.Factions);
-		}
+			IPartOfFactions partOfFactions = target as IPartOfFactions;
 
-		private bool AreThereSharedFactions(Factions characterFactions)
-		{
-			return this.factions.Intersect(characterFactions.factions).Any();
+			if (partOfFactions != null)
+			{
+				return this.list.Intersect(partOfFactions.Factions.list).Any();
+			}
+
+			return false;
 		}
 	}
 }

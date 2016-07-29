@@ -43,6 +43,7 @@
     <Compile Include="IDamageStrategy.cs" />
     <Compile Include="DamageElementsStrategy.cs" />
     <Compile Include="Damage.cs" />
+    <Compile Include="IPartOfFactions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
