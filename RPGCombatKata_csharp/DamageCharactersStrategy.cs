@@ -5,7 +5,7 @@ namespace RPGCombatKata_csharp
 	{
 		private const int levelDistance = 5;
 
-		public Damage CalculateDamage(IBattlefieldElement player, IBattlefieldElement target, int value)
+		public Damage CalculateDamage(BattlefieldElement player, BattlefieldElement target, int value)
 		{
 			double multiplerDamageFactor = 0.50;
 
@@ -32,12 +32,12 @@ namespace RPGCombatKata_csharp
 			return damage - (damage * multiplerDamageFactor);
 		}
 
-		private bool EnoughMaginToBoostAttack(IBattlefieldElement player, IBattlefieldElement target)
+		private bool EnoughMaginToBoostAttack(BattlefieldElement player, BattlefieldElement target)
 		{
 			return (player.CurrentLevel - levelDistance) >= target.CurrentLevel;
 		}
 
-		private bool EnoughMarginToReduceAttack(IBattlefieldElement player, IBattlefieldElement target)
+		private bool EnoughMarginToReduceAttack(BattlefieldElement player, BattlefieldElement target)
 		{
 			return (target.CurrentLevel - levelDistance) >= player.CurrentLevel;
 		}

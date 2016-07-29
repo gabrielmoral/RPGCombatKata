@@ -5,19 +5,15 @@ namespace RPGCombatKata_csharp
 	{
 		private readonly int damage;
 		private readonly IDamageStrategy damageStrategy;
-		private readonly IRulesToAttack rulesToAttack;
 
-		public Attack(int damage, IDamageStrategy damageStrategy, IRulesToAttack rulesToAttack)
+		public Attack(int damage, IDamageStrategy damageStrategy)
 		{
-			this.rulesToAttack = rulesToAttack;
 			this.damageStrategy = damageStrategy;
 			this.damage = damage;
 		}
 
-		public Damage CalculateDamage(IBattlefieldElement attacker, IBattlefieldElement target)
+		public Damage CalculateDamage(BattlefieldElement attacker, BattlefieldElement target)
 		{
-			if (!rulesToAttack.AreFollow(attacker, target)) return new Damage(0);
-
 			return damageStrategy.CalculateDamage(attacker, target, damage);
 		}
 	}

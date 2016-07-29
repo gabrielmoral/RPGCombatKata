@@ -7,8 +7,8 @@ namespace RPGCombatKata_charp.Test
 {
 	public class Tests
 	{
-		private Attack minimum_attack_for_character_death = new Attack(1000, new DamageCharactersStrategy(), new RulesToAttackCharacters());
-		private Attack attack_with_some_damage = new Attack(100, new DamageCharactersStrategy(), new RulesToAttackCharacters());
+		private Attack minimum_attack_for_character_death = new Attack(1000, new DamageCharactersStrategy());
+		private Attack attack_with_some_damage = new Attack(100, new DamageCharactersStrategy());
 
 		[Fact]
 		public void When_Damage_Is_Higher_Than_Health_The_Character_Dies()
@@ -189,11 +189,13 @@ namespace RPGCombatKata_charp.Test
 		[Fact]
 		public void Character_Can_Deal_Damage_To_Props()
 		{
+		 	var attack_for_no_characters = new Attack(100, new DamageElementsStrategy());
+
 			int houseHealth = 2000;
 			var character = new Character();
-			var house = new Property(houseHealth);
+			var house = new BattlefieldElement(houseHealth);
 
-			character.Attack(house, attack_with_some_damage);
+			character.Attack(house, attack_for_no_characters);
 
 			house.CurrentHealth.Should().BeLessThan(houseHealth);
 		}

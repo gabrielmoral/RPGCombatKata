@@ -18,7 +18,7 @@ namespace RPGCombatKata_csharp
 			factions.Add(faction);
 		}
 
-		public bool IsTheTargetMyAlly(IBattlefieldElement target)
+		public bool IsTheTargetMyAlly(BattlefieldElement target)
 		{
 			return AreThereSharedFactions(target.Factions);
 		}

@@ -4,39 +4,34 @@ using System.Linq;
 
 namespace RPGCombatKata_csharp
 {
-	public class Character : ICharacter
+	public class Character : BattlefieldElement
 	{
 		private const double MinimumHealth = 0;
 		public const int MaximumHealth = 1000;
 
-		public Factions Factions { get; private set; }
-		public double CurrentHealth { get; private set;}
-		public int CurrentLevel { get; private set; }
-
-		public Character(int characterLevel = 1)
+		public Character(int characterLevel = 1) : base(MaximumHealth)
 		{
-			this.Factions = new Factions();
-			this.CurrentHealth = MaximumHealth;
 			this.CurrentLevel = characterLevel;
 		}
 
-		public void Attack(IBattlefieldElement target, Attack attack)
+		public void Attack(BattlefieldElement target, Attack attack)
 		{	
 			if (Factions.IsTheTargetMyAlly(target)) return;
+			if (AmIHurtingMyself(this, target)) return;
 
 			Damage damage = attack.CalculateDamage(this, target);
 
 			target.RecieveDamage(damage);
 		}
 
-		public void Attack(IBattlefieldElement target, Attack attack, Battlefield battleField)
+		public void Attack(BattlefieldElement target, Attack attack, Battlefield battleField)
 		{
 			if (!battleField.IsTargetInRange(this, target, GetRangeAttack())) return;
 
 			Attack(target, attack);
 		}
 
-		public void Heal(ICharacter target, int healing)
+		public void Heal(Character target, int healing)
 		{
 			if (!Factions.IsTheTargetMyAlly(target)) return;
 
@@ -50,10 +45,7 @@ namespace RPGCombatKata_csharp
 			HealMyself(healing);
 		}
 
-		public bool IsDead()
-		{
-			return this.CurrentHealth.Equals(MinimumHealth);
-		}
+
 
 		public void AddToFaction(Faction faction)
 		{
@@ -65,18 +57,6 @@ namespace RPGCombatKata_csharp
 			return 1;
 		}
 
-		public void RecieveDamage(Damage damage)
-		{
-			double value = damage.Value;
-
-			this.CurrentHealth -= value;
-
-			if (this.CurrentHealth < MinimumHealth)
-			{
-				this.CurrentHealth = MinimumHealth;
-			}
-		}
-
 		private void HealMyself(int healing)
 		{
 			CurrentHealth += healing;
@@ -85,6 +65,11 @@ namespace RPGCombatKata_csharp
 			{
 				this.CurrentHealth = MaximumHealth;
 			}
+		}
+
+		private bool AmIHurtingMyself(BattlefieldElement attacker, BattlefieldElement enemy)
+		{
+			return attacker.Equals(enemy);
 		}
 	}
 }

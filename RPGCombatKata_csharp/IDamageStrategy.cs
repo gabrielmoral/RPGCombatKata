@@ -3,7 +3,7 @@ namespace RPGCombatKata_csharp
 {
 	public interface IDamageStrategy
 	{
-		Damage CalculateDamage(IBattlefieldElement attacker, IBattlefieldElement target, int damage);
+		Damage CalculateDamage(BattlefieldElement attacker, BattlefieldElement target, int damage);
 	}
 }
 
